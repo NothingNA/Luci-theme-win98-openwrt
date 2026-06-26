@@ -1,6 +1,13 @@
 # luci-theme-win98
+Forked from fffonion/openwrt-win98-theme：https://github.com/fffonion/openwrt-win98-theme
+修改处：
+1.中英文字体统一使用像素体
+![字体](docs/ziti.png)
 
-[中文文档](README.zh.md)
+2.复选框选中后会有黑点提示
+![复选框](docs/fuxuankuang.png)
+
+----------------以下为原版介绍----------------
 
 `luci-theme-win98` is an OpenWrt 24.x / LuCI theme with a Windows 98 inspired desktop style. It uses classic gray window chrome, raised buttons, recessed inputs, blue title bars, a teal desktop background, and a fixed taskbar footer.
 
