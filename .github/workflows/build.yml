@@ -1,4 +1,4 @@
-name: Build IPK
+name: Build OpenWrt APK
 
 on:
   push:
@@ -12,21 +12,28 @@ permissions:
 
 jobs:
   release:
-    name: Build and release luci-theme-win98
+    name: Build and release luci-theme-win98 OpenWrt APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout full git history
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Prepare dist output dir
+        run: mkdir -p dist
+
+      - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+          cache: "pip"
 
-      - name: Build and publish release for each commit
+      - name: Install gh cli
+        run: sudo apt update && sudo apt install -y gh
+
+      - name: Build & upload OpenWrt APK for each commit
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -35,11 +42,9 @@ jobs:
           mapfile -t shas < <(python - <<'PY'
           import json
           import os
-
           event_path = os.environ["GITHUB_EVENT_PATH"]
           with open(event_path, "r", encoding="utf-8") as fh:
               event = json.load(fh)
-
           for commit in event.get("commits", []):
               sha = commit.get("id")
               if sha:
@@ -52,21 +57,28 @@ jobs:
           fi
 
           for sha in "${shas[@]}"; do
+            short_sha="${sha:0:12}"
+            tag="apk-${short_sha}"
+            out_file="dist/luci-theme-win98-${short_sha}.apk"
+
+            # 彻底清理工作区，防止不同提交文件污染
+            git reset --hard HEAD
+            git clean -fdx
             git checkout --force "$sha"
 
-            short_sha="${sha:0:12}"
-            tag="ipk-${short_sha}"
-            out="dist/luci-theme-win98-${short_sha}.ipk"
+            # 调用 OpenWrt apk 打包脚本
+            python scripts/build_apk.py --out "$out_file"
 
-            python scripts/build_ipk.py --out "$out"
-
+            # 上传/创建 Release
             if gh release view "$tag" >/dev/null 2>&1; then
-              gh release upload "$tag" "$out" --clobber
+              echo "Release $tag exists, overwrite APK asset"
+              gh release upload "$tag" "$out_file" --clobber
             else
-              gh release create "$tag" "$out" \
+              echo "Create new release tag $tag"
+              gh release create "$tag" "$out_file" \
                 --target "$sha" \
-                --title "luci-theme-win98 ${short_sha}" \
-                --notes "Automated IPK build for commit ${sha}." \
+                --title "luci-theme-win98 OpenWrt APK ${short_sha}" \
+                --notes "Automated OpenWrt 25.12 APK build for commit: \`${sha}\`" \
                 --latest=false
             fi
           done
