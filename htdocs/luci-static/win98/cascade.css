@@ -4125,3 +4125,92 @@ pre,
 		grid-template-columns: 1fr;
 	}
 }
+
+/* ============================================
+   复选框勾选状态修复（Win98 风格 - 像素化小黑点）
+   ============================================ */
+
+/* 通用复选框样式 */
+input[type="checkbox"],
+.cbi-input-checkbox,
+input.cbi-input-checkbox {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    min-width: 13px;
+    margin: 0 6px 0 0;
+    padding: 0 !important;
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow:
+        inset -1px -1px var(--win98-light),
+        inset 1px 1px var(--win98-shadow),
+        inset -2px -2px var(--win98-mid),
+        inset 2px 2px var(--win98-dark);
+    cursor: pointer;
+    vertical-align: -2px;
+    flex-shrink: 0;
+    transition: none;
+}
+
+/* 悬停状态 */
+input[type="checkbox"]:hover,
+.cbi-input-checkbox:hover,
+input.cbi-input-checkbox:hover {
+    background: #ffffff;
+}
+
+/* 获得焦点 */
+input[type="checkbox"]:focus-visible,
+.cbi-input-checkbox:focus-visible,
+input.cbi-input-checkbox:focus-visible {
+    outline: 1px dotted var(--win98-dark);
+    outline-offset: 0;
+}
+
+/* 勾选状态 - 像素化小黑点（使用 box-shadow 绘制） */
+input[type="checkbox"]:checked::after,
+.cbi-input-checkbox:checked::after,
+input.cbi-input-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 4px;
+    height: 4px;
+    background: #000000;
+}
+
+/* 禁用状态 */
+input[type="checkbox"]:disabled,
+.cbi-input-checkbox:disabled,
+input.cbi-input-checkbox:disabled {
+    background: var(--win98-face);
+    cursor: default;
+}
+
+input[type="checkbox"]:disabled:checked::after,
+.cbi-input-checkbox:disabled:checked::after,
+input.cbi-input-checkbox:disabled:checked::after {
+    background: var(--win98-shadow);
+}
+
+/* 与标签文本对齐 */
+label > input[type="checkbox"],
+label > .cbi-input-checkbox,
+.cbi-value-field input[type="checkbox"] {
+    margin-right: 4px;
+}
+
+/* 表格中的复选框特殊处理 */
+.td input[type="checkbox"],
+.cbi-section-table-row input[type="checkbox"] {
+    margin: 0 auto;
+    display: flex;
+}
