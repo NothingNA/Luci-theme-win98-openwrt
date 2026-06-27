@@ -3,7 +3,7 @@ Forked from [fffonion/openwrt-win98-theme](https://github.com/fffonion/openwrt-w
 ---------------------------------------------
 
 修改处：  
-1.中英文字体统一使用破晓像素字体
+1.中英文字体统一使用破晓像素字体（试了几个字体，感觉有好几种都可以用……）
 ![字体](docs/ziti.png)
 
 2.复选框选中后会有黑点提示
