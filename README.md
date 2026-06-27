@@ -2,7 +2,7 @@
 Forked from [fffonion/openwrt-win98-theme](https://github.com/fffonion/openwrt-win98-theme)  
 ---------------------------------------------
 
-修改处：
+修改处：  
 1.中英文字体统一使用像素体
 ![字体](docs/ziti.png)
 
