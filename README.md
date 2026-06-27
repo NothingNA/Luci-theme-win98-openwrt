@@ -1,5 +1,5 @@
 # luci-theme-win98
-Forked from fffonion/openwrt-win98-theme：https://github.com/fffonion/openwrt-win98-theme  
+Forked from [fffonion/openwrt-win98-theme](https://github.com/fffonion/openwrt-win98-theme)  
 ---------------------------------------------
 
 修改处：
