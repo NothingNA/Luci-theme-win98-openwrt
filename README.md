@@ -1,6 +1,6 @@
 # luci-theme-win98
 Forked from fffonion/openwrt-win98-theme：https://github.com/fffonion/openwrt-win98-theme
----------------------------------------------
+--------------------^_^----------------------
 
 修改处：
 1.中英文字体统一使用像素体
@@ -8,6 +8,8 @@ Forked from fffonion/openwrt-win98-theme：https://github.com/fffonion/openwrt-w
 
 2.复选框选中后会有黑点提示
 ![复选框](docs/fuxuankuang.png)
+
+3.Actions改成生成ipk，apk两种安装包
 
 ----------------以下为原版介绍----------------
 
